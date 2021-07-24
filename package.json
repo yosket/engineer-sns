@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pull-env-local": "vercel env pull .env.local"
   },
   "dependencies": {
     "dayjs": "^1.10.6",
@@ -22,6 +23,7 @@
     "eslint-config-next": "11.0.1",
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.7",
-    "typescript": "4.3.5"
+    "typescript": "4.3.5",
+    "vercel": "^23.0.1"
   }
 }

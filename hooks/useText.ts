@@ -1,8 +1,8 @@
 import useSWR, { SWRResponse } from 'swr'
 import { Text } from '../models/Text'
 
-const BASE_URL = 'https://versatileapi.herokuapp.com/api'
-
 export const useAllText = (): SWRResponse<Text[], Error> => {
-  return useSWR(`${BASE_URL}/text/all?$orderby=_created_at desc&$limit=20`)
+  return useSWR(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/text/all?$orderby=_created_at desc&$limit=20`
+  )
 }
