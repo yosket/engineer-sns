@@ -39,26 +39,23 @@ const HomePage: NextPage = ({
                 width={40}
                 height={40}
                 alt={getUser(t._user_id)?.name}
-                className="rounded-full"
+                className="rounded-full flex-shrink-0"
               />
             )}
-            <p className="leading-tight">
-              <span>{getUser(t._user_id)?.name ?? t._user_id}</span>
-              <br />
-              <small className="text-gray-400">{t._user_id}</small>
+            <p className="leading-tight grid">
+              <span className="break-all">
+                {getUser(t._user_id)?.name ?? t._user_id}
+              </span>
+              <small className="text-gray-400 truncate w-full">
+                {t._user_id}
+              </small>
             </p>
           </div>
           <p>{t.text}</p>
-          <div className="flex justify-end space-x-4 text-xs text-gray-400">
-            <p className="space-x-2">
-              <span>投稿</span>
-              <time>{dayjs(t._created_at).format('lll')}</time>
-            </p>
-            <p className="space-x-2">
-              <span>最終更新</span>
-              <time>{dayjs(t._updated_at).format('lll')}</time>
-            </p>
-          </div>
+          <p className="text-xs text-gray-400 flex justify-end space-x-2">
+            <span>投稿</span>
+            <time>{dayjs(t._created_at).format('lll')}</time>
+          </p>
         </article>
       ))}
     </div>
