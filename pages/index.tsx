@@ -1,3 +1,4 @@
+import { ClockIcon } from '@heroicons/react/outline'
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import Image from 'next/image'
 import { useDayjs } from '../hooks/useDayjs'
@@ -52,8 +53,8 @@ const HomePage: NextPage = ({
             </p>
           </div>
           <p>{t.text}</p>
-          <p className="text-xs text-gray-400 flex justify-end space-x-2">
-            <span>投稿</span>
+          <p className="text-xs text-gray-400 flex justify-end items-center space-x-2">
+            <ClockIcon className="w-4 h-4" />
             <time>{dayjs(t._created_at).format('lll')}</time>
           </p>
         </article>

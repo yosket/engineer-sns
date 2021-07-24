@@ -10,6 +10,7 @@
     "pull-env-local": "vercel env pull .env.local"
   },
   "dependencies": {
+    "@heroicons/react": "^1.0.2",
     "blockies": "^0.0.2",
     "dayjs": "^1.10.6",
     "next": "11.0.1",
