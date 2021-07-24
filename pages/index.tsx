@@ -1,11 +1,19 @@
 import { NextPage } from 'next'
+import Image from 'next/image'
 import { useDayjs } from '../hooks/useDayjs'
 import { useAllText } from '../hooks/useText'
-import { Text } from '../models/Text'
+import { useAllUser } from '../hooks/useUser'
+import { getBlockieImageUrl } from '../lib/utils'
+import { Text, User } from '../models'
 
 const HomePage: NextPage = () => {
   const { data: allText } = useAllText()
+  const { data: users } = useAllUser()
   const dayjs = useDayjs()
+
+  const getUser = (id: string): User | undefined => {
+    return users?.find((u) => u.id === id)
+  }
 
   return (
     <div className="space-y-4 p-4">
@@ -14,8 +22,20 @@ const HomePage: NextPage = () => {
           className="border border-gray-200 p-4 rounded space-y-4"
           key={t.id}
         >
-          <p>{t.id}</p>
-          <p>{t._user_id}</p>
+          <div className="flex items-center space-x-4">
+            <Image
+              src={getBlockieImageUrl(t._user_id)}
+              width={40}
+              height={40}
+              alt={getUser(t._user_id)?.name}
+              className="rounded-full"
+            />
+            <p className="leading-tight">
+              <span>{getUser(t._user_id)?.name ?? t._user_id}</span>
+              <br />
+              <small className="text-gray-400">{t._user_id}</small>
+            </p>
+          </div>
           <p>{t.text}</p>
           <div className="flex justify-end space-x-4 text-xs text-gray-400">
             <p className="space-x-2">

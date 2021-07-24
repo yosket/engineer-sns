@@ -1,5 +1,5 @@
 import useSWR, { SWRResponse } from 'swr'
-import { Text } from '../models/Text'
+import { Text } from '../models'
 
 export const useAllText = (): SWRResponse<Text[], Error> => {
   return useSWR(

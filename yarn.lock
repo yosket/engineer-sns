@@ -185,6 +185,11 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@types/blockies@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@types/blockies/-/blockies-0.0.2.tgz#8fb66ade3687f167e7d5b1790593bc34226e49ed"
+  integrity sha512-Or6q7y+jG8XSAfew286TgGxzj/KeGP87OFLxe/Lhm3yOKXAipWkcggp+wCLfnuntL5R8bSmUSIgsH2cgjFMbMw==
+
 "@types/node@*":
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.4.1.tgz#9fad171a5b701613ee8a6f4ece3c88b1034b1b03"
@@ -534,6 +539,11 @@ binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
+
+blockies@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/blockies/-/blockies-0.0.2.tgz#22ad58da4f6b382bc79bf4386c5820c70047e4ed"
+  integrity sha1-Iq1Y2k9rOCvHm/Q4bFggxwBH5O0=
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.9:
   version "4.12.0"
