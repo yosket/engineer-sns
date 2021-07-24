@@ -1,6 +1,9 @@
-import useSWR, { SWRResponse } from 'swr'
+import useSWR, { SWRConfiguration, SWRResponse } from 'swr'
+import { getUsersUrl } from '../lib/fetcher'
 import { User } from '../models'
 
-export const useAllUser = (): SWRResponse<User[], Error> => {
-  return useSWR(`${process.env.NEXT_PUBLIC_BASE_URL}/user/all`)
+export const useAllUser = (
+  options: SWRConfiguration = {}
+): SWRResponse<User[], Error> => {
+  return useSWR(getUsersUrl(), options)
 }

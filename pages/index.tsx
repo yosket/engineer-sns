@@ -1,14 +1,24 @@
-import { NextPage } from 'next'
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 import Image from 'next/image'
 import { useDayjs } from '../hooks/useDayjs'
 import { useAllText } from '../hooks/useText'
 import { useAllUser } from '../hooks/useUser'
+import { fetcher, getTextsUrl, getUsersUrl } from '../lib/fetcher'
 import { getBlockieImageUrl } from '../lib/utils'
 import { Text, User } from '../models'
 
-const HomePage: NextPage = () => {
-  const { data: allText } = useAllText()
-  const { data: users } = useAllUser()
+export const getStaticProps: GetStaticProps = async () => {
+  const texts: Text[] = await fetcher(getTextsUrl())
+  const users: User[] = await fetcher(getUsersUrl())
+  return { props: { texts, users }, revalidate: 1 }
+}
+
+const HomePage: NextPage = ({
+  texts: textsInitialData,
+  users: usersInitialData,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { data: allText } = useAllText({ initialData: textsInitialData })
+  const { data: users } = useAllUser({ initialData: usersInitialData })
   const dayjs = useDayjs()
 
   const getUser = (id: string): User | undefined => {
@@ -23,13 +33,15 @@ const HomePage: NextPage = () => {
           key={t.id}
         >
           <div className="flex items-center space-x-4">
-            <Image
-              src={getBlockieImageUrl(t._user_id)}
-              width={40}
-              height={40}
-              alt={getUser(t._user_id)?.name}
-              className="rounded-full"
-            />
+            {process.browser && (
+              <Image
+                src={getBlockieImageUrl(t._user_id)}
+                width={40}
+                height={40}
+                alt={getUser(t._user_id)?.name}
+                className="rounded-full"
+              />
+            )}
             <p className="leading-tight">
               <span>{getUser(t._user_id)?.name ?? t._user_id}</span>
               <br />
