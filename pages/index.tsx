@@ -40,19 +40,17 @@ const HomePage: NextPage = ({
                 width={40}
                 height={40}
                 alt={getUser(t._user_id)?.name}
-                className="rounded-full flex-shrink-0"
+                className="w-10 h-10 rounded-full flex-shrink-0"
               />
             )}
-            <p className="leading-tight grid">
-              <span className="break-all">
+            <p className="grid flex-1">
+              <span className="truncate">
                 {getUser(t._user_id)?.name ?? t._user_id}
               </span>
-              <small className="text-gray-400 truncate w-full">
-                {t._user_id}
-              </small>
+              <small className="text-gray-400 truncate">{t._user_id}</small>
             </p>
           </div>
-          <p>{t.text}</p>
+          <p className="break-all">{t.text}</p>
           <p className="text-xs text-gray-400 flex justify-end items-center space-x-2">
             <ClockIcon className="w-4 h-4" />
             <time>{dayjs(t._created_at).format('lll')}</time>
