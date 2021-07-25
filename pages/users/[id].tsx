@@ -15,9 +15,11 @@ const Image = dynamic(() => import('next/image'))
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const users: User[] = await fetcher(getUsersUrl())
-  const paths = users.map((u) => ({
-    params: { id: u.id },
-  }))
+  const paths = users
+    .filter((u) => !!u.name)
+    .map((u) => ({
+      params: { id: u.id },
+    }))
   return { paths, fallback: false }
 }
 
