@@ -27,7 +27,7 @@ const HomePage: NextPage = ({
   }
 
   return (
-    <div className="space-y-4 p-4">
+    <div className="space-y-4 md:space-y-8 p-4 md:p-8">
       {allText?.map((t: Text) => (
         <article
           className="border border-gray-200 p-4 rounded space-y-4"
