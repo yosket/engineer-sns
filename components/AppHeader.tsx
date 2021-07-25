@@ -11,19 +11,19 @@ const AppHeader: FC<Props> = ({ className }) => {
   return (
     <header className={cn('bg-white shadow py-2 px-4 md:px-8', className)}>
       <Link href="/">
-        <a
-          className="inline-flex items-center space-x-2 align-top bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text"
-          style={{ WebkitTextFillColor: 'transparent' }}
-        >
-          <ChipIcon className="w-6 h-6 md:w-8 md:h-8 text-blue-500" />
-          <span
-            className="text-2xl font-bold"
-            style={{
-              letterSpacing: '-1px',
-            }}
-          >
-            Engineer SNS
-          </span>
+        <a className="inline-block align-top">
+          <div className="flex items-center space-x-2">
+            <ChipIcon className="w-6 h-6 md:w-8 md:h-8 text-blue-500" />
+            <span
+              className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text"
+              style={{
+                letterSpacing: '-1px',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Engineer SNS
+            </span>
+          </div>
         </a>
       </Link>
     </header>
