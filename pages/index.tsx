@@ -23,7 +23,7 @@ const HomePage: NextPage = ({
   }
 
   return (
-    <div className="space-y-4 md:space-y-8 p-4 md:p-8">
+    <div className="space-y-4 md:space-y-8 p-4 md:p-8 max-w-screen-sm mx-auto">
       {allText?.map((t: Text) => (
         <TextListItem key={t.id} text={t} user={getUser(t._user_id)} />
       ))}

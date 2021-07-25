@@ -1,7 +1,7 @@
 import blockies from 'blockies'
 
-export const getBlockieImageUrl = (address: string): string => {
-  return blockies({ seed: address }).toDataURL()
+export const getBlockieImageUrl = (seed: string): string => {
+  return blockies({ seed }).toDataURL()
 }
 
 export const getCroppedAddress = (address: string): string => {
