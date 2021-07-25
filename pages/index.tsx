@@ -30,7 +30,7 @@ const HomePage: NextPage = ({
     <div className="space-y-4 md:space-y-8 p-4 md:p-8">
       {allText?.map((t: Text) => (
         <article
-          className="border border-gray-200 p-4 rounded space-y-4"
+          className="border border-gray-200 p-4 rounded-xl space-y-4"
           key={t.id}
         >
           <div className="flex items-center space-x-4">
