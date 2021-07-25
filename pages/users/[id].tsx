@@ -24,8 +24,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const users: User = await fetcher(getUserUrl(params?.id as string))
-  return { props: { users }, revalidate: 1 }
+  try {
+    const user: User = await fetcher(getUserUrl(params?.id as string))
+    return { props: { user }, revalidate: 1 }
+  } catch (e) {
+    return { notFound: true }
+  }
 }
 
 const HomePage: NextPage = ({
