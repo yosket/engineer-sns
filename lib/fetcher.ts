@@ -9,3 +9,6 @@ export const getUsersUrl = () => `${process.env.NEXT_PUBLIC_BASE_URL}/user/all`
 
 export const getUserUrl = (id: string) =>
   `${process.env.NEXT_PUBLIC_BASE_URL}/user/${id}`
+
+export const postUserUrl = () =>
+  `${process.env.NEXT_PUBLIC_BASE_URL}/user/create_user`

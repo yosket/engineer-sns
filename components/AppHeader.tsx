@@ -1,4 +1,4 @@
-import { ChipIcon } from '@heroicons/react/outline'
+import { ChipIcon, UserCircleIcon } from '@heroicons/react/outline'
 import cn from 'classnames'
 import Link from 'next/link'
 import { FC } from 'react'
@@ -9,7 +9,12 @@ type Props = {
 
 const AppHeader: FC<Props> = ({ className }) => {
   return (
-    <header className={cn('bg-white shadow py-2 px-4 md:px-8', className)}>
+    <header
+      className={cn(
+        'bg-white shadow py-2 px-4 md:px-8 flex items-center',
+        className
+      )}
+    >
       <Link href="/">
         <a className="inline-block align-top">
           <div className="flex items-center space-x-2">
@@ -24,6 +29,11 @@ const AppHeader: FC<Props> = ({ className }) => {
               Engineer SNS
             </span>
           </div>
+        </a>
+      </Link>
+      <Link href="/account">
+        <a className="text-gray-400 ml-auto">
+          <UserCircleIcon className="w-8 h-8" />
         </a>
       </Link>
     </header>

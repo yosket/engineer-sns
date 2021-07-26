@@ -55,7 +55,7 @@ const PostModal: FC<Props> = ({ shown, hide }) => {
         value={postText}
         onChange={(e) => setPostText(e.target.value.trim())}
         autoFocus
-        className="w-full h-40 border border-gray-200 rounded-xl p-2"
+        className="w-full appearance-none h-40 border border-gray-200 rounded-xl p-2"
         placeholder="投稿する文章を入力"
       />
     </Modal>
