@@ -53,8 +53,8 @@ const TextList: FC<Props> = ({ usersInitialData }) => {
       }
       className="space-y-4 md:space-y-8"
     >
-      {texts?.map((t: Text) => (
-        <TextListItem key={t.id} text={t} user={getUser(t._user_id)} />
+      {texts?.map((t: Text, i: number) => (
+        <TextListItem key={i} text={t} user={getUser(t._user_id)} />
       ))}
     </InfiniteScroll>
   )
