@@ -15,7 +15,7 @@ const AppHeader: FC<Props> = ({ className }) => {
           <div className="flex items-center space-x-2">
             <ChipIcon className="w-6 h-6 md:w-8 md:h-8 text-blue-500" />
             <span
-              className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text"
+              className="text-2xl font-bold bg-gradient-primary bg-clip-text"
               style={{
                 letterSpacing: '-1px',
                 WebkitTextFillColor: 'transparent',
