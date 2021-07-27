@@ -19,7 +19,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title key="title">Engineer SNS</title>
+        <title key="title">
+          SOFEAP - SNS only for engineers and programmers
+        </title>
         <link rel="icon" type="svg+xml" href="/logo.svg" key="favicon" />
       </Head>
 

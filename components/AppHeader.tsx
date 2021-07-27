@@ -22,16 +22,21 @@ const AppHeader: FC<Props> = ({ className }) => {
     >
       <Link href="/">
         <a className="inline-block align-top">
-          <div className="flex items-center space-x-2">
-            <ChipIcon className="w-6 h-6 md:w-8 md:h-8 text-blue-500" />
-            <span
-              className="text-2xl font-bold bg-gradient-primary bg-clip-text"
-              style={{
-                letterSpacing: '-1px',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
-              Engineer SNS
+          <div className="flex items-center space-x-2 md:space-x-4">
+            <ChipIcon className="w-8 h-8 md:w-10 md:h-10 text-blue-500" />
+            <span className="leading-none">
+              <span
+                className="inline-block text-xl font-bold bg-gradient-primary bg-clip-text"
+                style={{ WebkitTextFillColor: 'transparent' }}
+              >
+                SOFEAP
+              </span>
+              <small
+                className="block bg-gradient-primary bg-clip-text"
+                style={{ fontSize: '8px', WebkitTextFillColor: 'transparent' }}
+              >
+                SNS only for engineers and programmers
+              </small>
             </span>
           </div>
         </a>
