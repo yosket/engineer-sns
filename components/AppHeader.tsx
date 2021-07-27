@@ -16,7 +16,7 @@ const AppHeader: FC<Props> = ({ className }) => {
   return (
     <header
       className={cn(
-        'bg-white shadow py-2 px-4 md:px-8 flex items-center',
+        'bg-white shadow pt-2 pb-2.5 px-4 md:px-8 flex items-center',
         className
       )}
     >
@@ -58,6 +58,10 @@ const AppHeader: FC<Props> = ({ className }) => {
           )}
         </a>
       </Link>
+      <span
+        className="absolute bottom-0 left-0 bg-gradient-primary w-full h-0.5"
+        aria-hidden
+      />
     </header>
   )
 }
