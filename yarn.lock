@@ -200,6 +200,11 @@
   resolved "https://registry.yarnpkg.com/@types/blockies/-/blockies-0.0.2.tgz#8fb66ade3687f167e7d5b1790593bc34226e49ed"
   integrity sha512-Or6q7y+jG8XSAfew286TgGxzj/KeGP87OFLxe/Lhm3yOKXAipWkcggp+wCLfnuntL5R8bSmUSIgsH2cgjFMbMw==
 
+"@types/gtag.js@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@types/gtag.js/-/gtag.js-0.0.7.tgz#ac3c2008a5f943fa503d17355a8a8bbc80b603ed"
+  integrity sha512-Kl5beBoB0OXw7WeFgHHpLEchvC7HyIu3v1AksNNTemAF6jmEmQGqhZQSHcG6BOU/Lq0xsByQNqLzicLPjVkxYQ==
+
 "@types/node@*":
   version "16.4.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.4.1.tgz#9fad171a5b701613ee8a6f4ece3c88b1034b1b03"
