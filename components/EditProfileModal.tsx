@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { mutate } from 'swr'
-import { useProfile, USER_PROFILE_KEY } from '../hooks/useUser'
+import { useProfile } from '../hooks/useUser'
 import { getUsersUrl, getUserUrl, postUserUrl } from '../lib/fetcher'
 import Modal from './ui/Modal'
 
@@ -30,13 +30,12 @@ const EditProfileModal: FC<Props> = ({ shown, hide }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, description }),
+        body: JSON.stringify({
+          name: name.trim(),
+          description: description.trim(),
+        }),
       })
       const { id } = await res.json()
-      localStorage.setItem(
-        USER_PROFILE_KEY,
-        JSON.stringify({ id, name, description })
-      )
       await Promise.all([mutate(getUserUrl(id)), mutate(getUsersUrl())])
       hide()
       setName('')
@@ -71,14 +70,14 @@ const EditProfileModal: FC<Props> = ({ shown, hide }) => {
       <div className="space-y-4">
         <input
           value={name}
-          onChange={(e) => setName(e.target.value.trim())}
+          onChange={(e) => setName(e.target.value)}
           autoFocus
           className="w-full appearance-none border border-gray-200 rounded-xl p-2"
           placeholder="名前を入力"
         />
         <textarea
           value={description}
-          onChange={(e) => setDescription(e.target.value.trim())}
+          onChange={(e) => setDescription(e.target.value)}
           className="w-full appearance-none h-40 border border-gray-200 rounded-xl p-2"
           placeholder="自己紹介文を入力"
         />

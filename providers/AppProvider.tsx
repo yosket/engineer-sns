@@ -1,5 +1,5 @@
 import { createContext, FC, useEffect, useReducer } from 'react'
-import { USER_PROFILE_KEY } from '../hooks/useUser'
+import { USER_PROFILE_KEY, useUser } from '../hooks/useUser'
 import { Profile } from '../models'
 
 type State = {
@@ -36,14 +36,25 @@ export const AppContext = createContext<ContextTypes>({
 
 const AppProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const { data: me } = useUser(state.profile.id)
 
   useEffect(() => {
+    if (me) {
+      const { id, name, description } = me
+      dispatch({ type: ACTIONS.SET, payload: { id, name, description } })
+      localStorage.setItem(
+        USER_PROFILE_KEY,
+        JSON.stringify({ id, name, description })
+      )
+      return
+    }
+
     const profileString = localStorage.getItem(USER_PROFILE_KEY)
     if (profileString) {
       const profile = JSON.parse(profileString)
       dispatch({ type: ACTIONS.SET, payload: profile })
     }
-  }, [])
+  }, [me])
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

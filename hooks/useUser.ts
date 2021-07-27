@@ -14,7 +14,7 @@ export const useUser = (
   id: string,
   options: SWRConfiguration = {}
 ): SWRResponse<User, Error> => {
-  return useSWR(getUserUrl(id), options)
+  return useSWR(id ? getUserUrl(id) : null, options)
 }
 
 export const USER_PROFILE_KEY = 'engineer-sns:profile'
