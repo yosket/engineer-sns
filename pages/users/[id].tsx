@@ -9,7 +9,11 @@ import dynamic from 'next/dynamic'
 import BackButton from '../../components/BackButton'
 import { useUser } from '../../hooks/useUser'
 import { fetcher, getUsersUrl, getUserUrl } from '../../lib/fetcher'
-import { getBlockieImageUrl } from '../../lib/utils'
+import {
+  getBlockieImageUrl,
+  replaceToAnchor,
+  replaceToBr,
+} from '../../lib/utils'
 import { User } from '../../models'
 
 const Image = dynamic(() => import('next/image'))
@@ -84,7 +88,14 @@ const HomePage: NextPage = ({
             )}
           </div>
           <h1 className="font-bold text-3xl">{user.name}</h1>
-          <p>{user.description}</p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: replaceToAnchor(
+                replaceToBr(user.description),
+                'text-blue-500'
+              ),
+            }}
+          />
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { FC } from 'react'
 import { useDayjs } from '../hooks/useDayjs'
-import { getBlockieImageUrl } from '../lib/utils'
+import { getBlockieImageUrl, replaceToAnchor, replaceToBr } from '../lib/utils'
 import { Text, User } from '../models'
 
 const Image = dynamic(() => import('next/image'))
@@ -54,7 +54,12 @@ const TextListItem: FC<Props> = ({ text, user }) => {
           <small className="text-gray-400 truncate">{text._user_id}</small>
         </p>
       </UserInfo>
-      <p className="break-all">{text.text}</p>
+      <p
+        className="break-all"
+        dangerouslySetInnerHTML={{
+          __html: replaceToAnchor(replaceToBr(text.text), 'text-blue-500'),
+        }}
+      />
       <p className="text-xs text-gray-400 flex justify-end items-center space-x-2">
         <ClockIcon className="w-4 h-4" />
         <time>{dayjs(text._created_at).format('lll')}</time>
