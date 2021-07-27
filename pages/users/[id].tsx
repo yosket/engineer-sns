@@ -58,11 +58,15 @@ const HomePage: NextPage = ({
               className="filter blur-lg"
             />
           )}
-          <BackButton
-            href="/"
-            className="absolute left-0 top-0 m-4 md:m-8"
-            iconClassName="w-6 h-6 text-white"
-          />
+          <div className="max-w-screen-sm mx-auto relative text-white">
+            <BackButton
+              href="/"
+              className="absolute left-0 top-0 m-4 md:mx-8"
+              iconClassName="w-6 h-6"
+            >
+              <span>トップへ戻る</span>
+            </BackButton>
+          </div>
         </div>
       </div>
       <div className="max-w-screen-sm mx-auto">
