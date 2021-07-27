@@ -6,6 +6,7 @@ import {
 } from 'next'
 import { useRouter } from 'next/dist/client/router'
 import dynamic from 'next/dynamic'
+import BackButton from '../../components/BackButton'
 import { useUser } from '../../hooks/useUser'
 import { fetcher, getUsersUrl, getUserUrl } from '../../lib/fetcher'
 import { getBlockieImageUrl } from '../../lib/utils'
@@ -57,6 +58,11 @@ const HomePage: NextPage = ({
               className="filter blur-lg"
             />
           )}
+          <BackButton
+            href="/"
+            className="absolute left-0 top-0 m-4 md:m-8"
+            iconClassName="w-6 h-6 text-white"
+          />
         </div>
       </div>
       <div className="max-w-screen-sm mx-auto">

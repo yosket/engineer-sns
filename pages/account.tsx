@@ -1,7 +1,6 @@
-import { ArrowLeftIcon } from '@heroicons/react/outline'
 import { NextPage } from 'next'
-import Link from 'next/link'
 import { useState } from 'react'
+import BackButton from '../components/BackButton'
 import EditProfileModal from '../components/EditProfileModal'
 
 const AccountPage: NextPage = () => {
@@ -16,11 +15,11 @@ const AccountPage: NextPage = () => {
             <h1 className="text-lg p-2 font-bold text-center text-gray-600">
               アカウント
             </h1>
-            <Link href="/">
-              <a className="absolute left-0 top-1/2 transform -translate-y-1/2 mx-4 md:mx-8">
-                <ArrowLeftIcon className="w-6 h-6 text-gray-600" />
-              </a>
-            </Link>
+            <BackButton
+              href="/"
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 mx-4 md:mx-8"
+              iconClassName="w-6 h-6 text-gray-600"
+            />
           </div>
         </div>
         <div className="max-w-screen-sm mx-auto">
