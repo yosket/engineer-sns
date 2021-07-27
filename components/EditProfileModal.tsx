@@ -35,7 +35,7 @@ const EditProfileModal: FC<Props> = ({ shown, hide }) => {
       const { id } = await res.json()
       localStorage.setItem(
         USER_PROFILE_KEY,
-        JSON.stringify({ name, description })
+        JSON.stringify({ id, name, description })
       )
       await Promise.all([mutate(getUserUrl(id)), mutate(getUsersUrl())])
       hide()

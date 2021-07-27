@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import useSWR, { SWRConfiguration, SWRResponse } from 'swr'
 import { getUsersUrl, getUserUrl } from '../lib/fetcher'
-import { User } from '../models'
+import { Profile, User } from '../models'
+import { AppContext } from '../providers/AppProvider'
 
 export const useAllUser = (
   options: SWRConfiguration = {}
@@ -18,15 +19,8 @@ export const useUser = (
 
 export const USER_PROFILE_KEY = 'engineer-sns:profile'
 
-export const useProfile = (): { name: string; description: string } | null => {
-  const [profile, setProfile] = useState(null)
-  useEffect(() => {
-    const string = localStorage.getItem(USER_PROFILE_KEY)
-    if (!string) {
-      return
-    }
-    const profile = JSON.parse(string)
-    setProfile(profile)
-  }, [])
+export const useProfile = (): Profile => {
+  const { state } = useContext(AppContext)
+  const { profile } = state
   return profile
 }

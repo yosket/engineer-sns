@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 import { useEffect } from 'react'
 import AppContainer from '../components/AppContainer'
+import AppProvider from '../providers/AppProvider'
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -15,9 +16,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <AppContainer>
-      <Component {...pageProps} />
-    </AppContainer>
+    <AppProvider>
+      <AppContainer>
+        <Component {...pageProps} />
+      </AppContainer>
+    </AppProvider>
   )
 }
 export default MyApp
