@@ -9,6 +9,9 @@ module.exports = {
       height: {
         screen: 'calc(var(--vh, 1vh) * 100)',
       },
+      minHeight: {
+        screen: 'calc(var(--vh, 1vh) * 100)',
+      },
     },
   },
   variants: {
