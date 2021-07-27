@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <title key="title">Engineer SNS</title>
-        <link rel="icon" type="image/png" href="/favicon.png" key="favicon" />
+        <link rel="icon" type="svg+xml" href="/logo.svg" key="favicon" />
       </Head>
 
       <AppProvider>
