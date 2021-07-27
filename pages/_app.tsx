@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
 import { useEffect } from 'react'
 import AppContainer from '../components/AppContainer'
 import AppProvider from '../providers/AppProvider'
@@ -16,11 +17,18 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <AppProvider>
-      <AppContainer>
-        <Component {...pageProps} />
-      </AppContainer>
-    </AppProvider>
+    <>
+      <Head>
+        <title key="title">Engineer SNS</title>
+        <link rel="icon" type="image/png" href="/favicon.png" key="favicon" />
+      </Head>
+
+      <AppProvider>
+        <AppContainer>
+          <Component {...pageProps} />
+        </AppContainer>
+      </AppProvider>
+    </>
   )
 }
 export default MyApp
