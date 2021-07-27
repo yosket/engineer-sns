@@ -6,6 +6,9 @@ module.exports = {
       fontFamily: {
         sans: ['Montserrat', 'Noto Sans JP', 'sans-serif'],
       },
+      height: {
+        screen: 'calc(var(--vh, 1vh) * 100)',
+      },
     },
   },
   variants: {

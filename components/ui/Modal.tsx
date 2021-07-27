@@ -18,7 +18,7 @@ const Modal: FC<Props> = ({ shown, hide, children, title, footerButtons }) => {
     <Transition show={shown} as={Fragment}>
       <Dialog
         onClose={handleClose}
-        className="fixed z-10 inset-0 overflow-y-auto pointer-events-none flex items-center justify-center min-h-screen px-4 text-center"
+        className="fixed z-10 inset-0 overflow-y-auto pointer-events-none flex items-center justify-center h-screen px-4 text-center"
       >
         <Transition.Child
           as={Fragment}

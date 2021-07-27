@@ -6,8 +6,4 @@
   .bg-gradient-primary {
     @apply bg-gradient-to-r from-blue-400 to-pink-400;
   }
-
-  .h-screen {
-    height: calc(var(--vh, 1vh) * 100) !important;
-  }
 }
