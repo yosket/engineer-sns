@@ -12,7 +12,7 @@ const PostButton: FC<Props> = ({ onClick, className }) => {
     <button
       className={cn(
         className,
-        'w-12 md:w-20 h-12 md:h-20 p-2.5 md:p-4 rounded-full bg-gradient-primary text-white'
+        'w-12 md:w-20 h-12 md:h-20 p-2.5 md:p-4 rounded-full bg-gradient-primary text-white shadow'
       )}
       onClick={onClick}
     >
