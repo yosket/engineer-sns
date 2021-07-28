@@ -1,5 +1,6 @@
 export type Profile = {
-  id: string
-  name: string
-  description: string
+  id?: string
+  ip?: string
+  name?: string
+  description?: string
 }

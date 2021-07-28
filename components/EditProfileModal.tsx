@@ -18,7 +18,6 @@ type Props = {
 
 const EditProfileModal: FC<Props> = ({ shown, hide }) => {
   const profile = useProfile()
-  const isRegistered = !!profile
 
   const {
     register,
@@ -28,14 +27,14 @@ const EditProfileModal: FC<Props> = ({ shown, hide }) => {
   } = useForm<FormData>({ mode: 'onChange' })
 
   useEffect(() => {
-    setValue('name', profile.name)
-    setValue('description', profile.description)
+    setValue('name', profile.name ?? '')
+    setValue('description', profile.description ?? '')
   }, [setValue, profile.name, profile.description])
 
   const onSubmit = async ({ name, description }: FormData) => {
     try {
-      await fetch(postUserUrl(), {
-        method: isRegistered ? 'PUT' : 'POST',
+      const res = await fetch(postUserUrl(), {
+        method: 'POST', // Qiitaの記事には更新時にはPUTとあるがPOSTの方がよかった
         headers: {
           'Content-Type': 'application/json',
         },
@@ -44,7 +43,8 @@ const EditProfileModal: FC<Props> = ({ shown, hide }) => {
           description: description.trim(),
         }),
       })
-      await Promise.all([mutate(getUserUrl(profile.id)), mutate(getUsersUrl())])
+      const { id } = await res.json()
+      await Promise.all([mutate(getUserUrl(id)), mutate(getUsersUrl())])
       hide()
     } catch (e) {
       alert('エラーが発生しました')
@@ -76,9 +76,11 @@ const EditProfileModal: FC<Props> = ({ shown, hide }) => {
             type="submit"
             className={classNames(
               'flex-1 text-white rounded-xl p-2',
-              !isDirty || !isValid ? 'bg-gray-200' : 'bg-gradient-primary'
+              !isDirty || !isValid || !profile.id
+                ? 'bg-gray-200'
+                : 'bg-gradient-primary'
             )}
-            disabled={!isDirty || !isValid}
+            disabled={!isDirty || !isValid || !profile.id}
           >
             登録・編集
           </button>

@@ -17,10 +17,17 @@ export const useUser = (
   return useSWR(id ? getUserUrl(id) : null, options)
 }
 
-export const USER_PROFILE_KEY = 'engineer-sns:profile'
-
 export const useProfile = (): Profile => {
   const { state } = useContext(AppContext)
   const { profile } = state
   return profile
+}
+
+export const useIpData = (
+  options: SWRConfiguration = {}
+): SWRResponse<{ ip: string }, Error> => {
+  return useSWR(
+    `https://ipinfo.io/json?token=${process.env.NEXT_PUBLIC_IP_INFO_TOKEN}`,
+    options
+  )
 }

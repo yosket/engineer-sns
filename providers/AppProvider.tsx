@@ -1,6 +1,13 @@
 import { createContext, FC, useEffect, useReducer } from 'react'
-import { USER_PROFILE_KEY, useUser } from '../hooks/useUser'
+import { useIpData, useUser } from '../hooks/useUser'
 import { Profile } from '../models'
+
+const STORAGE_KEY = 'sofeap:profile'
+
+type StorageItem = {
+  id: string
+  ip: string
+}
 
 type State = {
   profile: Profile
@@ -15,14 +22,18 @@ type Action = { type: typeof ACTIONS.SET; payload: Profile }
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case ACTIONS.SET:
-      const { id, name, description } = action.payload
-      return { profile: { id, name, description } }
+      const { id, ip, name, description } = action.payload
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ id, ip } as StorageItem)
+      )
+      return { profile: { id, ip, name, description } }
     default:
       return state
   }
 }
 
-const initialState = { profile: { id: '', name: '', description: '' } }
+const initialState = { profile: { id: '', ip: '', name: '', description: '' } }
 
 type ContextTypes = {
   state: State
@@ -36,25 +47,23 @@ export const AppContext = createContext<ContextTypes>({
 
 const AppProvider: FC = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
-  const { data: me } = useUser(state.profile.id)
+  const { data: me } = useUser(state?.profile.id ?? '')
+  const { data: ipData } = useIpData()
 
   useEffect(() => {
-    if (me) {
+    if (me && ipData) {
       const { id, name, description } = me
-      dispatch({ type: ACTIONS.SET, payload: { id, name, description } })
-      localStorage.setItem(
-        USER_PROFILE_KEY,
-        JSON.stringify({ id, name, description })
-      )
+      const { ip } = ipData
+      dispatch({ type: ACTIONS.SET, payload: { id, ip, name, description } })
       return
     }
 
-    const profileString = localStorage.getItem(USER_PROFILE_KEY)
+    const profileString = localStorage.getItem(STORAGE_KEY)
     if (profileString) {
-      const profile = JSON.parse(profileString)
+      const profile = JSON.parse(profileString) as StorageItem
       dispatch({ type: ACTIONS.SET, payload: profile })
     }
-  }, [me])
+  }, [me, ipData])
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
