@@ -1,8 +1,15 @@
-import { FC, useEffect, useState } from 'react'
+import classNames from 'classnames'
+import { FC, useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 import { mutate } from 'swr'
 import { useProfile } from '../hooks/useUser'
 import { getUsersUrl, getUserUrl, postUserUrl } from '../lib/fetcher'
 import Modal from './ui/Modal'
+
+type FormData = {
+  name: string
+  description: string
+}
 
 type Props = {
   shown: boolean
@@ -12,20 +19,22 @@ type Props = {
 const EditProfileModal: FC<Props> = ({ shown, hide }) => {
   const profile = useProfile()
   const isRegistered = !!profile
-  const [name, setName] = useState<string>('')
-  const [description, setDescription] = useState<string>('')
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, isValid },
+    setValue,
+  } = useForm<FormData>({ mode: 'onChange' })
 
   useEffect(() => {
-    if (!profile) {
-      return
-    }
-    setName(profile.name)
-    setDescription(profile.description)
-  }, [profile])
+    setValue('name', profile.name)
+    setValue('description', profile.description)
+  }, [setValue, profile.name, profile.description])
 
-  const post = async () => {
+  const onSubmit = async ({ name, description }: FormData) => {
     try {
-      const res = await fetch(postUserUrl(), {
+      await fetch(postUserUrl(), {
         method: isRegistered ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,53 +44,46 @@ const EditProfileModal: FC<Props> = ({ shown, hide }) => {
           description: description.trim(),
         }),
       })
-      const { id } = await res.json()
-      await Promise.all([mutate(getUserUrl(id)), mutate(getUsersUrl())])
+      await Promise.all([mutate(getUserUrl(profile.id)), mutate(getUsersUrl())])
       hide()
-      setName('')
-      setDescription('')
     } catch (e) {
       alert('エラーが発生しました')
     }
   }
 
   return (
-    <Modal
-      shown={shown}
-      hide={hide}
-      title="プロフィール登録・編集"
-      footerButtons={[
-        <button
-          key="cancel"
-          className="flex-1 p-2 text-gray-400 rounded-xl"
-          onClick={hide}
-        >
-          キャンセル
-        </button>,
-        <button
-          key="post"
-          className="flex-1 bg-gradient-primary text-white rounded-xl p-2"
-          onClick={post}
-        >
-          登録・編集
-        </button>,
-      ]}
-    >
-      <div className="space-y-4">
+    <Modal shown={shown} hide={hide} title="プロフィール登録・編集">
+      <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          autoFocus
-          className="w-full appearance-none border border-gray-200 rounded-xl p-2"
+          className="w-full appearance-none border border-gray-200 rounded-xl p-2 align-top"
           placeholder="名前を入力"
+          {...register('name', { required: true, maxLength: 30 })}
         />
         <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full appearance-none h-40 border border-gray-200 rounded-xl p-2"
+          className="w-full appearance-none h-40 border border-gray-200 rounded-xl p-2 align-top"
           placeholder="自己紹介文を入力"
+          {...register('description', { required: true, maxLength: 300 })}
         />
-      </div>
+        <div className="flex space-x-4">
+          <button
+            type="button"
+            className="flex-1 p-2 text-gray-400 rounded-xl"
+            onClick={hide}
+          >
+            キャンセル
+          </button>
+          <button
+            type="submit"
+            className={classNames(
+              'flex-1 text-white rounded-xl p-2',
+              !isDirty || !isValid ? 'bg-gray-200' : 'bg-gradient-primary'
+            )}
+            disabled={!isDirty || !isValid}
+          >
+            登録・編集
+          </button>
+        </div>
+      </form>
     </Modal>
   )
 }
