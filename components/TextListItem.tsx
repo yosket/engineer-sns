@@ -15,7 +15,7 @@ type UserInfoType = {
 const UserInfo: FC<UserInfoType> = ({ user, children }) => {
   return (
     <>
-      {!!user?.name ? (
+      {!!user ? (
         <Link href={`/users/${user.id}`}>
           <a className="flex items-center space-x-4">{children}</a>
         </Link>
@@ -49,13 +49,13 @@ const TextListItem: FC<Props> = ({ text, user }) => {
             className="w-10 h-10 rounded-full flex-shrink-0"
           />
         )}
-        <p className="grid flex-1">
+        <p className="grid flex-1 text-sm md:text-base">
           <span className="truncate">{user?.name ?? '（未登録ユーザー）'}</span>
           <small className="text-gray-400 truncate">{text._user_id}</small>
         </p>
       </UserInfo>
       <p
-        className="break-all"
+        className="break-all text-sm md:text-base"
         dangerouslySetInnerHTML={{
           __html: replaceToAnchor(replaceToBr(text.text), 'text-blue-500'),
         }}
