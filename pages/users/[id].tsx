@@ -7,6 +7,8 @@ import {
 import { useRouter } from 'next/dist/client/router'
 import dynamic from 'next/dynamic'
 import BackButton from '../../components/BackButton'
+import TextListItem from '../../components/TextListItem'
+import { useTextsByUserId } from '../../hooks/useText'
 import { useUser } from '../../hooks/useUser'
 import { fetcher, getUsersUrl, getUserUrl } from '../../lib/fetcher'
 import {
@@ -14,7 +16,7 @@ import {
   replaceToAnchor,
   replaceToBr,
 } from '../../lib/utils'
-import { User } from '../../models'
+import { Text, User } from '../../models'
 
 const Image = dynamic(() => import('next/image'))
 
@@ -44,6 +46,7 @@ const HomePage: NextPage = ({
   const { data: user } = useUser(router.query.id as string, {
     initialData: userInitialData,
   })
+  const { data: texts } = useTextsByUserId(user?.id ?? '')
 
   if (!user) {
     return <></>
@@ -96,6 +99,11 @@ const HomePage: NextPage = ({
               ),
             }}
           />
+        </div>
+        <div className="space-y-4 md:space-y-8 p-4">
+          {texts?.map((t: Text, i: number) => (
+            <TextListItem key={i} text={t} user={user} />
+          ))}
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import useSWR, {
   SWRResponse,
   useSWRInfinite,
 } from 'swr'
-import { getTextsUrl } from '../lib/fetcher'
+import { getTextsUrl, getUserTextsUrl } from '../lib/fetcher'
 import { Text } from '../models'
 
 export const useAllText = (
@@ -22,4 +22,11 @@ export const useTexts = (
     if (previousPageData && !previousPageData.length) return null
     return getTextsUrl(pageIndex * limit, limit)
   }, options)
+}
+
+export const useTextsByUserId = (
+  userId: string,
+  options: SWRInfiniteConfiguration = {}
+): SWRResponse<Text[], Error> => {
+  return useSWR(userId ? getUserTextsUrl(userId) : null, options)
 }

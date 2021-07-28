@@ -5,6 +5,9 @@ export const getTextsUrl = (offset: number = 0, limit: number = 20) =>
 
 export const postTextsUrl = () => `${process.env.NEXT_PUBLIC_BASE_URL}/text`
 
+export const getUserTextsUrl = (userId: string) =>
+  `${process.env.NEXT_PUBLIC_BASE_URL}/text/all?$orderby=_created_at desc&$filter=_user_id eq '${userId}'`
+
 export const getUsersUrl = () => `${process.env.NEXT_PUBLIC_BASE_URL}/user/all`
 
 export const getUserUrl = (id: string) =>
