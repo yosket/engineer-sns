@@ -3,6 +3,8 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { FC } from 'react'
 import { useDayjs } from '../hooks/useDayjs'
+import { useText } from '../hooks/useText'
+import { useUser } from '../hooks/useUser'
 import { getBlockieImageUrl, replaceToAnchor, replaceToBr } from '../lib/utils'
 import { Text, User } from '../models'
 
@@ -32,6 +34,8 @@ type Props = {
 }
 
 const TextListItem: FC<Props> = ({ text, user }) => {
+  const { data: reply } = useText(text.in_reply_to_text_id ?? '')
+  const { data: replyUser } = useUser(reply?._user_id ?? '')
   const dayjs = useDayjs()
 
   return (
@@ -64,6 +68,7 @@ const TextListItem: FC<Props> = ({ text, user }) => {
         <ClockIcon className="w-4 h-4" />
         <time>{dayjs(text._created_at).format('lll')}</time>
       </p>
+      {reply && replyUser && <TextListItem text={reply} user={replyUser} />}
     </article>
   )
 }

@@ -5,13 +5,20 @@ import useSWR, {
   SWRResponse,
   useSWRInfinite,
 } from 'swr'
-import { getTextsUrl, getUserTextsUrl } from '../lib/fetcher'
+import { getTextsUrl, getTextUrl, getUserTextsUrl } from '../lib/fetcher'
 import { Text } from '../models'
 
 export const useAllText = (
   options: SWRConfiguration = {}
 ): SWRResponse<Text[], Error> => {
   return useSWR(getTextsUrl(), options)
+}
+
+export const useText = (
+  textId: string,
+  options: SWRConfiguration = {}
+): SWRResponse<Text, Error> => {
+  return useSWR(textId ? getTextUrl(textId) : null, options)
 }
 
 export const useTexts = (
@@ -26,7 +33,7 @@ export const useTexts = (
 
 export const useTextsByUserId = (
   userId: string,
-  options: SWRInfiniteConfiguration = {}
+  options: SWRConfiguration = {}
 ): SWRResponse<Text[], Error> => {
   return useSWR(userId ? getUserTextsUrl(userId) : null, options)
 }
