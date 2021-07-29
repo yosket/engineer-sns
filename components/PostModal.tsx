@@ -1,23 +1,25 @@
 import classNames from 'classnames'
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { mutate } from 'swr'
 import Modal from '../components/ui/Modal'
 import { getTextsUrl, postTextsUrl } from '../lib/fetcher'
-import { User } from '../models'
+import { Text, User } from '../models'
 
 type FormData = {
   text: string
   in_reply_to_user_id?: string
+  in_reply_to_text_id?: string
 }
 
 type Props = {
   shown: boolean
   hide: () => void
   toUser?: User
+  toText?: Text
 }
 
-const PostModal: FC<Props> = ({ shown, hide, toUser }) => {
+const PostModal: FC<Props> = ({ shown, hide, toUser, toText }) => {
   const {
     register,
     handleSubmit,
@@ -29,7 +31,19 @@ const PostModal: FC<Props> = ({ shown, hide, toUser }) => {
     setValue('in_reply_to_user_id', toUser.id)
   }
 
-  const title = toUser ? `${toUser.name} への返信` : '投稿'
+  if (toText) {
+    setValue('in_reply_to_text_id', toText.id)
+  }
+
+  const title = useMemo(() => {
+    if (toUser) {
+      return `${toUser.name} への返信`
+    }
+    if (toText) {
+      return '返信'
+    }
+    return '投稿'
+  }, [toText, toUser])
 
   const onSubmit = async (data: FormData) => {
     try {
@@ -83,6 +97,13 @@ const PostModal: FC<Props> = ({ shown, hide, toUser }) => {
           <input
             type="hidden"
             {...register('in_reply_to_user_id')}
+            className="hidden"
+          />
+        )}
+        {!!toText && (
+          <input
+            type="hidden"
+            {...register('in_reply_to_text_id')}
             className="hidden"
           />
         )}
