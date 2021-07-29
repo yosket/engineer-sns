@@ -4,24 +4,34 @@ import { useForm } from 'react-hook-form'
 import { mutate } from 'swr'
 import Modal from '../components/ui/Modal'
 import { getTextsUrl, postTextsUrl } from '../lib/fetcher'
+import { User } from '../models'
 
 type FormData = {
   text: string
+  in_reply_to_user_id?: string
 }
 
 type Props = {
   shown: boolean
   hide: () => void
+  toUser?: User
 }
 
-const PostModal: FC<Props> = ({ shown, hide }) => {
+const PostModal: FC<Props> = ({ shown, hide, toUser }) => {
   const {
     register,
     handleSubmit,
     formState: { isDirty, isValid },
+    setValue,
   } = useForm<FormData>({ mode: 'onChange' })
 
-  const onSubmit = async ({ text }: FormData) => {
+  if (toUser) {
+    setValue('in_reply_to_user_id', toUser.id)
+  }
+
+  const title = toUser ? `${toUser.name} への返信` : '投稿'
+
+  const onSubmit = async (data: FormData) => {
     try {
       await fetch(postTextsUrl(), {
         method: 'POST',
@@ -29,7 +39,7 @@ const PostModal: FC<Props> = ({ shown, hide }) => {
           'Content-Type': 'application/json',
           Authorization: 'HelloWorld',
         },
-        body: JSON.stringify({ text }),
+        body: JSON.stringify(data),
       })
       await mutate(getTextsUrl())
       hide()
@@ -39,7 +49,7 @@ const PostModal: FC<Props> = ({ shown, hide }) => {
   }
 
   return (
-    <Modal shown={shown} hide={hide} title="投稿">
+    <Modal shown={shown} hide={hide} title={title}>
       <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <textarea
           className="w-full appearance-none h-40 border border-gray-200 rounded-xl p-2 align-top"
@@ -69,6 +79,13 @@ const PostModal: FC<Props> = ({ shown, hide }) => {
             投稿
           </button>
         </div>
+        {!!toUser && (
+          <input
+            type="hidden"
+            {...register('in_reply_to_user_id')}
+            className="hidden"
+          />
+        )}
       </form>
     </Modal>
   )
