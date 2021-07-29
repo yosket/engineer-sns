@@ -45,12 +45,12 @@ const Modal: FC<Props> = ({ shown, hide, children, title, footerButtons }) => {
           leaveTo="opacity-0 translate-y-4"
         >
           <div
-            className="inline-block bg-white text-left shadow-xl rounded-2xl transform transition-all align-middle max-w-lg w-full pointer-events-auto"
+            className="inline-block bg-white text-left shadow-xl rounded-xl transform transition-all align-middle max-w-lg w-full pointer-events-auto"
             role="dialog"
             aria-modal="true"
           >
             {title && (
-              <div className="bg-gray-50 px-4 p-4 flex space-x-4 items-center rounded-t-2xl">
+              <div className="bg-gray-50 px-4 p-4 flex space-x-4 items-center rounded-t-xl">
                 <Dialog.Title className="flex-1">{title}</Dialog.Title>
                 {hide && (
                   <button
@@ -64,7 +64,7 @@ const Modal: FC<Props> = ({ shown, hide, children, title, footerButtons }) => {
             )}
             <div className="px-4 pt-5 pb-4">{children}</div>
             {footerButtons && (
-              <div className="bg-gray-50 px-4 py-3 flex space-x-4 rounded-b-2xl">
+              <div className="bg-gray-50 px-4 py-3 flex space-x-4 rounded-b-xl">
                 {footerButtons}
               </div>
             )}
