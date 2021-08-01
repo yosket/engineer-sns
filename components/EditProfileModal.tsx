@@ -76,11 +76,9 @@ const EditProfileModal: FC<Props> = ({ shown, hide }) => {
             type="submit"
             className={classNames(
               'flex-1 text-white rounded-xl p-2',
-              !isDirty || !isValid || !profile.id
-                ? 'bg-gray-200'
-                : 'bg-gradient-primary'
+              !isDirty || !isValid ? 'bg-gray-200' : 'bg-gradient-primary'
             )}
-            disabled={!isDirty || !isValid || !profile.id}
+            disabled={!isDirty || !isValid}
           >
             登録・編集
           </button>
