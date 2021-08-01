@@ -11,6 +11,41 @@ import PostModal from './PostModal'
 
 const Image = dynamic(() => import('next/image'))
 
+type ReplyingProps = {
+  text?: Text
+  user: User
+}
+
+const Replying: FC<ReplyingProps> = ({ text, user }) => {
+  return (
+    <div className="bg-gray-50 px-4 py-2 -mt-4 -mx-4 rounded-t-xl text-xs text-gray-500 md:text-sm space-y-2">
+      <div className="flex items-center space-x-2">
+        <span className="inline-flex items-center space-x-2">
+          {process.browser && (
+            <Image
+              src={getBlockieImageUrl(user?.id ?? '')}
+              width={20}
+              height={20}
+              alt={user?.name}
+              className="w-5 h-5 rounded-full flex-shrink-0"
+            />
+          )}
+          <span>{user?.name ?? '（未登録ユーザー）'}</span>
+        </span>
+        <span>への返信</span>
+      </div>
+      {text && (
+        <p
+          className="break-all"
+          dangerouslySetInnerHTML={{
+            __html: replaceToAnchor(replaceToBr(text.text), 'text-blue-500'),
+          }}
+        />
+      )}
+    </div>
+  )
+}
+
 type UserInfoType = {
   user?: User
 }
@@ -53,22 +88,10 @@ const TextListItem: FC<Props> = ({ text, user }) => {
         className="border border-gray-200 p-4 rounded-xl space-y-4"
         key={text.id}
       >
-        {replyingUser && (
-          <div className="bg-gray-50 px-4 py-2 -mt-4 -mx-4 rounded-t-xl text-xs md:text-sm flex items-center space-x-2">
-            <span className="inline-flex items-center space-x-2">
-              {process.browser && (
-                <Image
-                  src={getBlockieImageUrl(replyingUser.id)}
-                  width={20}
-                  height={20}
-                  alt={replyingUser?.name}
-                  className="w-5 h-5 rounded-full flex-shrink-0"
-                />
-              )}
-              <span>{replyingUser?.name ?? '（未登録ユーザー）'}</span>
-            </span>
-            <span className="">への返信</span>
-          </div>
+        {replyingText && userOfReplyingText ? (
+          <Replying text={replyingText} user={userOfReplyingText} />
+        ) : (
+          replyingUser && <Replying user={replyingUser} />
         )}
         <UserInfo user={user}>
           {process.browser && (
@@ -110,9 +133,6 @@ const TextListItem: FC<Props> = ({ text, user }) => {
             <time>{dayjs(text._created_at).format('lll')}</time>
           </p>
         </div>
-        {replyingText && userOfReplyingText && (
-          <TextListItem text={replyingText} user={userOfReplyingText} />
-        )}
       </article>
 
       <PostModal
