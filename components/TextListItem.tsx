@@ -1,10 +1,11 @@
-import { ClockIcon, ReplyIcon } from '@heroicons/react/outline'
+import { ClockIcon, HeartIcon, ReplyIcon } from '@heroicons/react/outline'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { FC, useState } from 'react'
 import { useDayjs } from '../hooks/useDayjs'
-import { useText } from '../hooks/useText'
+import { useLike, useText } from '../hooks/useText'
 import { useUser } from '../hooks/useUser'
+import { getLikeUrl } from '../lib/fetcher'
 import { getBlockieImageUrl, replaceToAnchor, replaceToBr } from '../lib/utils'
 import { Text, User } from '../models'
 import PostModal from './PostModal'
@@ -79,8 +80,25 @@ const TextListItem: FC<Props> = ({ text, user }) => {
   const { data: replyingUser } = useUser(text.in_reply_to_user_id ?? '', {
     shouldRetryOnError: false,
   })
+  const { data: like, mutate: mutateLike } = useLike(text.id ?? '')
   const [isReplyModalShown, setIsReplyModalShown] = useState<boolean>(false)
   const dayjs = useDayjs()
+
+  const sendLike = async () => {
+    try {
+      await fetch(getLikeUrl(text.id), {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'LOVE',
+        },
+        body: JSON.stringify({ like_count: (like?.like_count ?? 0) + 1 }),
+      })
+      await mutateLike()
+    } catch (e) {
+      alert('エラーが発生しました')
+    }
+  }
 
   return (
     <>
@@ -117,7 +135,7 @@ const TextListItem: FC<Props> = ({ text, user }) => {
           }}
         />
         <div className="flex items-center justify-between">
-          <div className="flex items-center text-xs">
+          <div className="flex items-center text-xs space-x-4">
             <button
               className="text-gray-400"
               onClick={() => setIsReplyModalShown(true)}
@@ -125,6 +143,12 @@ const TextListItem: FC<Props> = ({ text, user }) => {
               <span className="flex items-center space-x-1">
                 <ReplyIcon className="w-4 h-4" />
                 <span>返信</span>
+              </span>
+            </button>
+            <button className="text-gray-400" onClick={sendLike}>
+              <span className="flex items-center space-x-1">
+                <HeartIcon className="w-4 h-4" />
+                <span>{like?.like_count ?? 0}</span>
               </span>
             </button>
           </div>

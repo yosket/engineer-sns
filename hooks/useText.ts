@@ -5,8 +5,14 @@ import useSWR, {
   SWRResponse,
   useSWRInfinite,
 } from 'swr'
-import { getTextsUrl, getTextUrl, getUserTextsUrl } from '../lib/fetcher'
+import {
+  getLikesUrl,
+  getTextsUrl,
+  getTextUrl,
+  getUserTextsUrl,
+} from '../lib/fetcher'
 import { Text } from '../models'
+import { Like } from '../models/Like'
 
 export const useAllText = (
   options: SWRConfiguration = {}
@@ -36,4 +42,19 @@ export const useTextsByUserId = (
   options: SWRConfiguration = {}
 ): SWRResponse<Text[], Error> => {
   return useSWR(userId ? getUserTextsUrl(userId) : null, options)
+}
+
+export const useLikes = (
+  options: SWRConfiguration = {}
+): SWRResponse<Like[], Error> => {
+  return useSWR(getLikesUrl(), options)
+}
+
+export const useLike = (
+  textId: string,
+  options: SWRConfiguration = {}
+): SWRResponse<Like, Error> => {
+  const res = useLikes(options)
+  const like = res.data?.find((l) => l.id === textId)
+  return { ...res, data: like } as SWRResponse<Like, Error>
 }

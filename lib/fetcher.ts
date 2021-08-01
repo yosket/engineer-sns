@@ -18,3 +18,8 @@ export const getUserUrl = (id: string) =>
 
 export const postUserUrl = () =>
   `${process.env.NEXT_PUBLIC_BASE_URL}/user/create_user`
+
+export const getLikesUrl = () => `${process.env.NEXT_PUBLIC_BASE_URL}/like/all`
+
+export const getLikeUrl = (textId: string) =>
+  `${process.env.NEXT_PUBLIC_BASE_URL}/like/${textId}`
