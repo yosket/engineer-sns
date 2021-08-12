@@ -6,7 +6,12 @@ import { useDayjs } from '../hooks/useDayjs'
 import { useLike, useText } from '../hooks/useText'
 import { useUser } from '../hooks/useUser'
 import { getLikeUrl } from '../lib/fetcher'
-import { getBlockieImageUrl, replaceToAnchor, replaceToBr } from '../lib/utils'
+import {
+  getBlockieImageUrl,
+  replaceToAnchor,
+  replaceToBr,
+  sanitize,
+} from '../lib/utils'
 import { Text, User } from '../models'
 import PostModal from './PostModal'
 
@@ -39,7 +44,10 @@ const Replying: FC<ReplyingProps> = ({ text, user }) => {
         <p
           className="break-all"
           dangerouslySetInnerHTML={{
-            __html: replaceToAnchor(replaceToBr(text.text), 'text-blue-500'),
+            __html: replaceToAnchor(
+              replaceToBr(sanitize(text.text)),
+              'text-blue-500'
+            ),
           }}
         />
       )}
@@ -131,7 +139,10 @@ const TextListItem: FC<Props> = ({ text, user }) => {
         <p
           className="break-all text-sm md:text-base"
           dangerouslySetInnerHTML={{
-            __html: replaceToAnchor(replaceToBr(text.text), 'text-blue-500'),
+            __html: replaceToAnchor(
+              replaceToBr(sanitize(text.text)),
+              'text-blue-500'
+            ),
           }}
         />
         <div className="flex items-center justify-between">

@@ -4,6 +4,15 @@ export const getBlockieImageUrl = (seed: string): string => {
   return blockies({ seed }).toDataURL()
 }
 
+export const sanitize = (str: string): string => {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27')
+}
+
 export const replaceToAnchor = (src: string, className?: string): string =>
   src.replace(
     /((https?|ftp)(:\/\/[-_.!~*'()a-zA-Z0-9;/?:@&=+$,%#]+))/g,
