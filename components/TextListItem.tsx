@@ -19,7 +19,7 @@ const Image = dynamic(() => import('next/image'))
 
 type ReplyingProps = {
   text?: Text
-  user: User
+  user?: User
 }
 
 const Replying: FC<ReplyingProps> = ({ text, user }) => {
@@ -27,9 +27,9 @@ const Replying: FC<ReplyingProps> = ({ text, user }) => {
     <div className="bg-gray-50 px-4 py-2 -mt-4 -mx-4 rounded-t-xl text-xs text-gray-500 md:text-sm space-y-2">
       <div className="flex items-center space-x-2">
         <span className="inline-flex items-center space-x-2">
-          {process.browser && (
+          {process.browser && (user?.id || text?._user_id) && (
             <Image
-              src={getBlockieImageUrl(user?.id ?? '')}
+              src={getBlockieImageUrl(user?.id ?? text?._user_id ?? '')}
               width={20}
               height={20}
               alt={user?.name}
@@ -116,6 +116,8 @@ const TextListItem: FC<Props> = ({ text, user }) => {
       >
         {replyingText && userOfReplyingText ? (
           <Replying text={replyingText} user={userOfReplyingText} />
+        ) : replyingText ? (
+          <Replying text={replyingText} />
         ) : (
           replyingUser && <Replying user={replyingUser} />
         )}
