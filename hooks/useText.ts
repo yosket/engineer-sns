@@ -28,7 +28,7 @@ export const useText = (
 }
 
 export const useTexts = (
-  limit: number,
+  limit: number = 20,
   options: SWRInfiniteConfiguration = {}
 ): SWRInfiniteResponse<Text[], Error> => {
   return useSWRInfinite((pageIndex, previousPageData) => {

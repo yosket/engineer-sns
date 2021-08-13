@@ -1,9 +1,9 @@
 import classNames from 'classnames'
 import { FC, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
-import { mutate } from 'swr'
 import Modal from '../components/ui/Modal'
-import { getTextsUrl, postTextsUrl } from '../lib/fetcher'
+import { useTexts } from '../hooks/useText'
+import { postTextsUrl } from '../lib/fetcher'
 import { Text, User } from '../models'
 
 type FormData = {
@@ -20,6 +20,7 @@ type Props = {
 }
 
 const PostModal: FC<Props> = ({ shown, hide, toUser, toText }) => {
+  const { mutate: mutateTexts } = useTexts()
   const {
     register,
     handleSubmit,
@@ -55,7 +56,7 @@ const PostModal: FC<Props> = ({ shown, hide, toUser, toText }) => {
         },
         body: JSON.stringify(data),
       })
-      await mutate(getTextsUrl())
+      await mutateTexts()
       hide()
     } catch (e) {
       alert('エラーが発生しました')
