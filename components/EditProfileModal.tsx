@@ -1,9 +1,8 @@
 import classNames from 'classnames'
 import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { mutate } from 'swr'
-import { useProfile } from '../hooks/useUser'
-import { getUsersUrl, getUserUrl, postUserUrl } from '../lib/fetcher'
+import { STORAGE_KEY, useAllUser, useMe } from '../hooks/useUser'
+import { postUserUrl } from '../lib/fetcher'
 import Modal from './ui/Modal'
 
 type FormData = {
@@ -17,19 +16,20 @@ type Props = {
 }
 
 const EditProfileModal: FC<Props> = ({ shown, hide }) => {
-  const profile = useProfile()
+  const { mutate: mutateUsers } = useAllUser()
+  const { data: profile, mutate: mutateMe } = useMe()
 
   const {
     register,
     handleSubmit,
-    formState: { isDirty, isValid },
+    formState: { isDirty, isValid, isSubmitting },
     setValue,
   } = useForm<FormData>({ mode: 'onChange' })
 
   useEffect(() => {
-    setValue('name', profile.name ?? '')
-    setValue('description', profile.description ?? '')
-  }, [setValue, profile.name, profile.description])
+    setValue('name', profile?.name ?? '')
+    setValue('description', profile?.description ?? '')
+  }, [setValue, profile?.name, profile?.description])
 
   const onSubmit = async ({ name, description }: FormData) => {
     try {
@@ -44,7 +44,10 @@ const EditProfileModal: FC<Props> = ({ shown, hide }) => {
         }),
       })
       const { id } = await res.json()
-      await Promise.all([mutate(getUserUrl(id)), mutate(getUsersUrl())])
+      const str = localStorage.getItem(STORAGE_KEY)
+      const storage = JSON.parse(str ?? '{}')
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...storage, id }))
+      await Promise.all([mutateMe(), mutateUsers()])
       hide()
     } catch (e) {
       alert('エラーが発生しました')
@@ -76,9 +79,11 @@ const EditProfileModal: FC<Props> = ({ shown, hide }) => {
             type="submit"
             className={classNames(
               'flex-1 text-white rounded-xl p-2',
-              !isDirty || !isValid ? 'bg-gray-200' : 'bg-gradient-primary'
+              !isDirty || !isValid || isSubmitting
+                ? 'bg-gray-200'
+                : 'bg-gradient-primary'
             )}
-            disabled={!isDirty || !isValid}
+            disabled={!isDirty || !isValid || isSubmitting}
           >
             登録・編集
           </button>
