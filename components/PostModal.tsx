@@ -24,7 +24,7 @@ const PostModal: FC<Props> = ({ shown, hide, toUser, toText }) => {
   const {
     register,
     handleSubmit,
-    formState: { isDirty, isValid },
+    formState: { isDirty, isValid, isSubmitting },
     setValue,
   } = useForm<FormData>({ mode: 'onChange' })
 
@@ -87,9 +87,11 @@ const PostModal: FC<Props> = ({ shown, hide, toUser, toText }) => {
             type="submit"
             className={classNames(
               'flex-1 text-white rounded-xl p-2',
-              !isDirty || !isValid ? 'bg-gray-200' : 'bg-gradient-primary'
+              !isDirty || !isValid || isSubmitting
+                ? 'bg-gray-200'
+                : 'bg-gradient-primary'
             )}
-            disabled={!isDirty || !isValid}
+            disabled={!isDirty || !isValid || isSubmitting}
           >
             投稿
           </button>
