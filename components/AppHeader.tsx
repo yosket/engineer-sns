@@ -3,7 +3,7 @@ import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC } from 'react'
-import { useProfile } from '../hooks/useUser'
+import { useMe } from '../hooks/useUser'
 import { getBlockieImageUrl } from '../lib/utils'
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
 }
 
 const AppHeader: FC<Props> = ({ className }) => {
-  const profile = useProfile()
+  const { data: profile } = useMe()
 
   return (
     <header
@@ -43,7 +43,7 @@ const AppHeader: FC<Props> = ({ className }) => {
       </Link>
       <Link href="/account">
         <a className="text-gray-400 ml-auto">
-          {profile.id && process.browser ? (
+          {profile?.id && process.browser ? (
             <div style={{ marginBottom: '-7px' }}>
               <Image
                 src={getBlockieImageUrl(profile.id)}

@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head'
 import { useEffect } from 'react'
 import AppContainer from '../components/AppContainer'
-import AppProvider from '../providers/AppProvider'
+import { useIpData, useMe } from '../hooks/useUser'
 import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -16,6 +16,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     return () => window.removeEventListener('resize', setFillHeight)
   }, [])
 
+  useIpData()
+  useMe()
+
   return (
     <>
       <Head>
@@ -25,11 +28,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" type="svg+xml" href="/logo.svg" key="favicon" />
       </Head>
 
-      <AppProvider>
-        <AppContainer>
-          <Component {...pageProps} />
-        </AppContainer>
-      </AppProvider>
+      <AppContainer>
+        <Component {...pageProps} />
+      </AppContainer>
     </>
   )
 }
