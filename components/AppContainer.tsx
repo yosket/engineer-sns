@@ -7,7 +7,7 @@ const AppContainer: FC = ({ children }) => {
     <div className="bg-white dark:bg-gray-800 relative min-h-screen flex flex-col">
       <AppHeader className="sticky top-0 w-full z-10" />
       <main className="bg-gray-50 dark:bg-gray-800 flex-1">{children}</main>
-      <AppFooter />
+      <AppFooter className="bg-gray-50 dark:bg-gray-800" />
     </div>
   )
 }
