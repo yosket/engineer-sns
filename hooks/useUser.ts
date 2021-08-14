@@ -8,14 +8,21 @@ export const STORAGE_KEY = 'sofeap:profile'
 export const useAllUser = (
   options: SWRConfiguration = {}
 ): SWRResponse<User[], Error> => {
-  return useSWR(getUsersUrl(), options)
+  return useSWR(getUsersUrl(), { ...options, revalidateOnMount: false })
 }
 
 export const useUser = (
   id: string,
   options: SWRConfiguration = {}
 ): SWRResponse<User, Error> => {
-  return useSWR(id ? getUserUrl(id) : null, options)
+  const { data: users } = useAllUser()
+  return useSWR(
+    id ? id : null,
+    (id: string) => {
+      return Promise.resolve(users?.find((u) => u.id === id))
+    },
+    options
+  )
 }
 
 export const useMe = (

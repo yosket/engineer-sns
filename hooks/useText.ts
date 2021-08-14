@@ -47,7 +47,7 @@ export const useTextsByUserId = (
 export const useLikes = (
   options: SWRConfiguration = {}
 ): SWRResponse<Like[], Error> => {
-  return useSWR(getLikesUrl(), options)
+  return useSWR(getLikesUrl(), { ...options, revalidateOnMount: false })
 }
 
 export const useLike = (
