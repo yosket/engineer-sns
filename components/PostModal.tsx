@@ -88,7 +88,7 @@ const PostModal: FC<Props> = ({ shown, hide, toUser, toText }) => {
             className={classNames(
               'flex-1 text-white rounded-xl p-2',
               !isDirty || !isValid || isSubmitting
-                ? 'bg-gray-200'
+                ? 'bg-gray-200 dark:bg-gray-700'
                 : 'bg-gradient-primary'
             )}
             disabled={!isDirty || !isValid || isSubmitting}

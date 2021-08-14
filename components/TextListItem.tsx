@@ -24,7 +24,7 @@ type ReplyingProps = {
 
 const Replying: FC<ReplyingProps> = ({ text, user }) => {
   return (
-    <div className="bg-gray-50 px-4 py-2 -mt-4 -mx-4 rounded-t-xl text-xs text-gray-500 md:text-sm space-y-2">
+    <div className="bg-gray-50 dark:bg-gray-700 px-4 py-2 -mt-4 -mx-4 rounded-t-xl text-xs text-gray-500 dark:text-gray-400 md:text-sm space-y-2">
       <div className="flex items-center space-x-2">
         <span className="inline-flex items-center space-x-2">
           {process.browser && (user?.id || text?._user_id) && (
@@ -64,10 +64,14 @@ const UserInfo: FC<UserInfoType> = ({ user, children }) => {
     <>
       {!!user ? (
         <Link href={`/users/${user.id}`}>
-          <a className="flex items-center space-x-4">{children}</a>
+          <a className="flex items-center space-x-4 text-black dark:text-white">
+            {children}
+          </a>
         </Link>
       ) : (
-        <div className="flex items-center space-x-4">{children}</div>
+        <div className="flex items-center space-x-4 text-black dark:text-white">
+          {children}
+        </div>
       )}
     </>
   )
@@ -111,7 +115,7 @@ const TextListItem: FC<Props> = ({ text, user }) => {
   return (
     <>
       <article
-        className="border border-gray-200 p-4 rounded-xl space-y-4"
+        className="border border-gray-200 dark:border-gray-500 p-4 rounded-xl space-y-4"
         key={text.id}
       >
         {replyingText && userOfReplyingText ? (
@@ -139,7 +143,7 @@ const TextListItem: FC<Props> = ({ text, user }) => {
           </p>
         </UserInfo>
         <p
-          className="break-all text-sm md:text-base"
+          className="break-all text-sm md:text-base text-black dark:text-white"
           dangerouslySetInnerHTML={{
             __html: replaceToAnchor(
               replaceToBr(sanitize(text.text)),

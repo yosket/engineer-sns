@@ -16,7 +16,7 @@ const AppHeader: FC<Props> = ({ className }) => {
   return (
     <header
       className={cn(
-        'bg-white shadow pt-2 pb-2.5 px-4 md:px-8 flex items-center',
+        'bg-white dark:bg-gray-800 shadow pt-2 pb-2.5 px-4 md:px-8 flex items-center',
         className
       )}
     >

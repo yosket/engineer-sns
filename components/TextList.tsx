@@ -47,7 +47,7 @@ const TextList: FC<Props> = ({ usersInitialData }) => {
       loadMore={loadMore}
       hasMore={!isReachingEnd}
       loader={
-        <div key={0} className="py-12 text-center">
+        <div key={0} className="py-12 text-center text-black dark:text-white">
           Loading ...
         </div>
       }
