@@ -18,9 +18,11 @@ const BackButton: FC<Props> = ({
 }) => {
   return (
     <Link href={href}>
-      <a className={classNames(className, 'flex items-center space-x-2')}>
+      <a
+        className={classNames(className, 'flex items-center space-x-2 text-sm')}
+      >
         <ArrowLeftIcon className={iconClassName} />
-        {children}
+        <span>{children}</span>
       </a>
     </Link>
   )

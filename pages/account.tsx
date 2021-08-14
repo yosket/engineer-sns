@@ -1,7 +1,7 @@
 import { NextPage } from 'next'
 import { useState } from 'react'
-import BackButton from '../components/BackButton'
 import EditProfileModal from '../components/EditProfileModal'
+import PageHeader from '../components/PageHeader'
 
 const AccountPage: NextPage = () => {
   const [isEditProfileModalShown, setIsEditProfileModalShown] =
@@ -9,19 +9,10 @@ const AccountPage: NextPage = () => {
 
   return (
     <>
-      <div className="">
-        <div className="bg-gray-100 dark:bg-gray-700">
-          <div className="max-w-screen-sm mx-auto relative">
-            <h1 className="text-lg p-2 font-bold text-center text-gray-600 dark:text-gray-200">
-              アカウント
-            </h1>
-            <BackButton
-              href="/"
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 mx-4 md:mx-8"
-              iconClassName="w-6 h-6 text-gray-600 dark:text-gray-200"
-            />
-          </div>
-        </div>
+      <div>
+        <PageHeader backTo="/" backButtonText="トップへ戻る">
+          アカウント
+        </PageHeader>
         <div className="max-w-screen-sm mx-auto">
           <section className="border-b border-gray-200 dark:border-gray-600 p-4 md:p-8 space-y-4">
             <h2 className="text-black dark:text-white">プロフィール</h2>
