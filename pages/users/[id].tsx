@@ -81,12 +81,12 @@ const UserPage: NextPage = ({
             </div>
           </div>
         </div>
-        <div className="bg-white">
+        <div className="bg-white dark:bg-gray-800">
           <div className="max-w-screen-sm mx-auto p-4 md:p-8 relative space-y-8">
             <div className="space-y-4">
               <div className="flex justify-center -mt-14 md:-mt-20">
                 {process.browser && (
-                  <div className="rounded-full border-4 border-white overflow-hidden w-20 md:w-32 h-20 md:h-32">
+                  <div className="rounded-full border-4 border-white dark:border-gray-800 overflow-hidden w-20 md:w-32 h-20 md:h-32">
                     <Image
                       src={getBlockieImageUrl(user.id)}
                       width={160}
@@ -96,8 +96,11 @@ const UserPage: NextPage = ({
                   </div>
                 )}
               </div>
-              <h1 className="font-bold text-3xl">{user.name}</h1>
+              <h1 className="font-bold text-3xl text-black dark:text-white">
+                {user.name}
+              </h1>
               <p
+                className="text-black dark:text-white"
                 dangerouslySetInnerHTML={{
                   __html: replaceToAnchor(
                     replaceToBr(user.description),
