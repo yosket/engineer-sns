@@ -17,8 +17,10 @@ const HomePage: NextPage = ({
   const [isPostModalShown, setIsPostModalShown] = useState<boolean>(false)
 
   return (
-    <div className="p-4 md:p-8 max-w-screen-sm mx-auto">
-      <TextList usersInitialData={usersInitialData} />
+    <div className="bg-white dark:bg-gray-800 p-4 md:p-8">
+      <div className="max-w-screen-sm mx-auto">
+        <TextList usersInitialData={usersInitialData} />
+      </div>
 
       <PostButton
         onClick={() => setIsPostModalShown(true)}
