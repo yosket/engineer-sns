@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app'
-import Head from 'next/head'
 import { useEffect } from 'react'
 import AppContainer from '../components/AppContainer'
+import AppHead from '../components/AppHead'
 import { useIpData, useMe } from '../hooks/useUser'
 import '../styles/globals.css'
 
@@ -21,12 +21,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <Head>
-        <title key="title">
-          SOFEAP - SNS only for engineers and programmers
-        </title>
+      <AppHead
+        title="SOFEAP - SNS only for engineers and programmers"
+        description="『エンジニア・プログラマにしか使えないSNSを作ってみた話』のウェブクライアントです"
+        imageUrl={`${process.env.CLIENT_ORIGIN}/ogp.png`}
+      >
         <link rel="icon" type="svg+xml" href="/logo.svg" key="favicon" />
-      </Head>
+      </AppHead>
 
       <AppContainer>
         <Component {...pageProps} />
