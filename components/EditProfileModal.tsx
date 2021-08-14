@@ -1,6 +1,7 @@
 import classNames from 'classnames'
 import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 import { STORAGE_KEY, useAllUser, useMe } from '../hooks/useUser'
 import { postUserUrl } from '../lib/fetcher'
 import Modal from './ui/Modal'
@@ -18,6 +19,7 @@ type Props = {
 const EditProfileModal: FC<Props> = ({ shown, hide }) => {
   const { mutate: mutateUsers } = useAllUser()
   const { data: profile, mutate: mutateMe } = useMe()
+  const { get, set } = useLocalStorage(STORAGE_KEY)
 
   const {
     register,
@@ -44,9 +46,8 @@ const EditProfileModal: FC<Props> = ({ shown, hide }) => {
         }),
       })
       const { id } = await res.json()
-      const str = localStorage.getItem(STORAGE_KEY)
-      const storage = JSON.parse(str ?? '{}')
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...storage, id }))
+      const storage = get()
+      set({ ...storage, id })
       await Promise.all([mutateMe(), mutateUsers()])
       hide()
     } catch (e) {

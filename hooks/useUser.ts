@@ -1,6 +1,7 @@
 import useSWR, { SWRConfiguration, SWRResponse } from 'swr'
 import { getUsersUrl, getUserUrl } from '../lib/fetcher'
 import { User } from '../models'
+import { useLocalStorage } from './useLocalStorage'
 
 export const STORAGE_KEY = 'sofeap:profile'
 
@@ -20,13 +21,10 @@ export const useUser = (
 export const useMe = (
   options: SWRConfiguration = {}
 ): SWRResponse<User, Error> => {
+  const { get, set } = useLocalStorage(STORAGE_KEY)
   return useSWR(
     () => {
-      if (!process.browser) {
-        return null
-      }
-      const str = localStorage.getItem(STORAGE_KEY)
-      const storage = JSON.parse(str ?? '{}')
+      const storage = get()
       if (!storage.id) {
         return null
       }
@@ -35,12 +33,8 @@ export const useMe = (
     {
       ...options,
       onSuccess: (me) => {
-        const str = localStorage.getItem(STORAGE_KEY)
-        const storage = JSON.parse(str ?? '{}')
-        localStorage.setItem(
-          STORAGE_KEY,
-          JSON.stringify({ ...storage, id: me.id })
-        )
+        const storage = get()
+        set({ ...storage, id: me.id })
       },
     }
   )
@@ -49,22 +43,19 @@ export const useMe = (
 export const useIpData = (
   options: SWRConfiguration = {}
 ): SWRResponse<{ ip: string }, Error> => {
+  const { get, set } = useLocalStorage(STORAGE_KEY)
   return useSWR(
     `https://ipinfo.io/json?token=${process.env.NEXT_PUBLIC_IP_INFO_TOKEN}`,
     {
       ...options,
       revalidateOnFocus: false,
       onSuccess: (ipData) => {
-        const str = localStorage.getItem(STORAGE_KEY)
-        let storage = JSON.parse(str ?? '{}')
-        if (storage?.ip !== ipData.ip) {
-          alert('IPアドレスが変わりました')
+        let storage = get()
+        if (storage?.ip && storage?.ip !== ipData.ip) {
+          console.info('IPアドレスが変わりました')
           storage = {}
         }
-        localStorage.setItem(
-          STORAGE_KEY,
-          JSON.stringify({ ...storage, ip: ipData.ip })
-        )
+        set({ ...storage, ip: ipData.ip })
       },
     }
   )
