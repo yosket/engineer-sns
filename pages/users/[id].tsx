@@ -81,8 +81,8 @@ const UserPage: NextPage = ({
             </div>
           </div>
         </div>
-        <div className="max-w-screen-sm mx-auto">
-          <div className="bg-white p-4 relative space-y-8">
+        <div className="bg-white">
+          <div className="max-w-screen-sm mx-auto p-4 md:p-8 relative space-y-8">
             <div className="space-y-4">
               <div className="flex justify-center -mt-14 md:-mt-20">
                 {process.browser && (
