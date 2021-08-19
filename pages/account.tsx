@@ -2,7 +2,29 @@ import { NextPage } from 'next'
 import { FC, useState } from 'react'
 import EditProfileModal from '../components/EditProfileModal'
 import PageHeader from '../components/PageHeader'
+import { useDayjs } from '../hooks/useDayjs'
 import { useIpData, useMe } from '../hooks/useUser'
+
+type SectionHeaderProps = {
+  title: string
+}
+
+const SectionHeader: FC<SectionHeaderProps> = ({ children, title }) => (
+  <div className="text-black dark:text-white">
+    <div className="max-w-screen-sm mx-auto flex justify-between items-end pt-8 md:pt-12 pb-2 md:pb-4 px-4 md:px-8">
+      <h2 className="text-gray-600 dark:text-gray-200 text-sm md:text-base font-bold">
+        {title}
+      </h2>
+      {children}
+    </div>
+  </div>
+)
+
+const List: FC = ({ children }) => (
+  <div className="max-w-screen-sm mx-auto bg-white dark:bg-gray-700 md:rounded-2xl">
+    {children}
+  </div>
+)
 
 type ListItemProps = {
   title: string
@@ -20,6 +42,7 @@ const ListItem: FC<ListItemProps> = ({ children, title }) => (
 )
 
 const AccountPage: NextPage = () => {
+  const dayjs = useDayjs()
   const { data: me } = useMe()
   const { data: ipData } = useIpData()
   const [isEditProfileModalShown, setIsEditProfileModalShown] =
@@ -31,26 +54,51 @@ const AccountPage: NextPage = () => {
         <PageHeader backTo="/" backButtonText="トップへ戻る">
           アカウント
         </PageHeader>
+
         <section className="bg-gray-50 dark:bg-gray-800">
-          <div className="text-black dark:text-white">
-            <div className="max-w-screen-sm mx-auto flex justify-between items-end pt-8 md:pt-12 pb-2 md:pb-4 px-4 md:px-8">
-              <h2 className="text-gray-600 dark:text-gray-200 text-sm md:text-base font-bold">
-                プロフィール
-              </h2>
-              <button
-                className="text-blue-500 text-sm md:text-base"
-                onClick={() => setIsEditProfileModalShown(true)}
-              >
-                登録・編集
-              </button>
-            </div>
-          </div>
-          <div className="max-w-screen-sm mx-auto bg-white dark:bg-gray-700 md:rounded-2xl">
+          <SectionHeader title="プロフィール">
+            <button
+              className="text-blue-500 text-sm md:text-base"
+              onClick={() => setIsEditProfileModalShown(true)}
+            >
+              登録・編集
+            </button>
+          </SectionHeader>
+          <List>
             <ListItem title="IPアドレス">{ipData?.ip}</ListItem>
             <ListItem title="ユーザーID">{me?.id}</ListItem>
             <ListItem title="名前">{me?.name}</ListItem>
             <ListItem title="自己紹介文">{me?.description}</ListItem>
-          </div>
+          </List>
+        </section>
+
+        <section className="bg-gray-50 dark:bg-gray-800">
+          <SectionHeader title="その他" />
+          <List>
+            <ListItem title="最終更新日">
+              {dayjs(process.env.LAST_UPDATED).format('lll')}
+            </ListItem>
+            <ListItem title="運営">
+              <a
+                href="http://twitter.com/yosket87"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500"
+              >
+                @yosket87
+              </a>
+            </ListItem>
+            <ListItem title="ソースコード">
+              <a
+                href="https://github.com/yosket/engineer-sns"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500"
+              >
+                Github
+              </a>
+            </ListItem>
+          </List>
         </section>
       </div>
 
